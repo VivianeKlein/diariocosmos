@@ -10,7 +10,13 @@ const imageTitle = document.querySelector("#image-title");
 const imageExplanation = document.querySelector("#image-explanation");
 const imageCredit = document.querySelector("#image-credit");
 
-const today = new Date().toISOString().slice(0, 10);
+const dateParts = new Intl.DateTimeFormat("en-US", {
+  day: "2-digit",
+  month: "2-digit",
+  timeZone: "America/New_York",
+  year: "numeric",
+}).formatToParts(new Date());
+const today = `${dateParts.find((part) => part.type === "year").value}-${dateParts.find((part) => part.type === "month").value}-${dateParts.find((part) => part.type === "day").value}`;
 datePicker.max = today;
 datePicker.value = today;
 
@@ -22,7 +28,7 @@ function setStatus(message, isError = false) {
 try {
   localStorage.removeItem("cosmos-nasa-api-key");
 } catch {
-  console.warn("Could not clear a NASA key saved by an earlier version.");
+  console.warn("Não foi possível remover do navegador uma chave salva por uma versão anterior.");
 }
 
 function formatDate(date) {
