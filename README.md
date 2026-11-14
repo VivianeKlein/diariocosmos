@@ -4,8 +4,11 @@ Uma pequena aplicação web para explorar a Imagem Astronômica do Dia da NASA (
 
 ## Como usar
 
-Abra `index.html` no navegador ou sirva a pasta com um servidor estático local. A página carrega automaticamente a imagem do dia; use o seletor de data para explorar o arquivo.
+É necessário ter Node.js 18 ou superior. No PowerShell, configure a chave no ambiente e inicie o servidor:
 
-Os dados são obtidos de `https://api.nasa.gov/planetary/apod`. Para usar sua própria chave, cole-a no campo **Sua chave da NASA** e clique em **Salvar e carregar**. Ela fica guardada no armazenamento local deste navegador; sem uma chave pessoal, a aplicação usa `DEMO_KEY`, sujeita aos limites de uso da NASA.
+```powershell
+$env:NASA_API_KEY = "SUA_CHAVE_DA_NASA"
+node server.js
+```
 
-Como a aplicação é estática, a chave é usada no navegador e não deve ser compartilhada nem incluída no código. Para publicar o site para outras pessoas, use um backend para proteger sua chave. Não há dependências ou etapa de compilação.
+Abra `http://localhost:3000`. A página carrega a APOD de hoje; use o seletor para escolher outra data. O servidor consulta a API da NASA e mantém a chave fora do HTML, do JavaScript e das requisições do navegador. A chave não é armazenada no repositório; configure-a como variável de ambiente também no ambiente do servidor ao publicar a aplicação.

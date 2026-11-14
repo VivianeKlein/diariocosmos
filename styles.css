@@ -159,39 +159,7 @@ h1 span {
   gap: 10px;
 }
 
-.key-panel {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  margin: 0 0 18px;
-  padding: 14px 16px 14px 20px;
-  border: 1px solid rgba(208, 211, 231, 0.11);
-  border-radius: 12px;
-  background: rgba(18, 23, 39, 0.55);
-}
-
-.key-copy label {
-  color: #d6d5e0;
-  font-size: 13px;
-  font-weight: 500;
-}
-
-.key-copy p {
-  margin: 4px 0 0;
-  color: var(--muted);
-  font-size: 11px;
-}
-
-.key-controls {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-input[type="date"],
-input[type="password"] {
+input[type="date"] {
   min-width: 0;
   min-height: 40px;
   padding: 0 10px;
@@ -204,7 +172,6 @@ input[type="password"] {
 }
 
 input[type="date"]:focus-visible,
-input[type="password"]:focus-visible,
 button:focus-visible,
 a:focus-visible {
   outline: 2px solid var(--accent);
@@ -240,21 +207,6 @@ button:disabled {
   margin: 0 2px 10px;
   color: var(--muted);
   font-size: 12px;
-}
-
-.key-status {
-  flex-basis: 100%;
-  margin: -5px 0 0;
-  color: var(--muted);
-  font-size: 11px;
-}
-
-.key-status:empty {
-  display: none;
-}
-
-.key-status.error {
-  color: #ffaaa9;
 }
 
 .status-message.error {
@@ -420,19 +372,7 @@ h2 {
     width: 100%;
   }
 
-  .key-panel {
-    align-items: stretch;
-    flex-direction: column;
-    gap: 10px;
-    padding: 14px;
-  }
-
-  .key-controls {
-    width: 100%;
-  }
-
-  input[type="date"],
-  input[type="password"] {
+  input[type="date"] {
     flex: 1;
   }
 

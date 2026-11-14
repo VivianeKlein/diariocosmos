@@ -6,7 +6,6 @@
     <meta name="theme-color" content="#090d18">
     <meta name="description" content="Explore a imagem astronômica do dia da NASA.">
     <title>Cosmos — Imagem astronômica do dia</title>
-    <link rel="preconnect" href="https://api.nasa.gov">
     <link rel="stylesheet" href="styles.css">
     <script src="app.js" defer></script>
   </head>
@@ -33,18 +32,6 @@
             <input id="date-picker" type="date" aria-label="Data da imagem astronômica">
             <button id="load-button" type="button">Ver imagem <span aria-hidden="true">↗</span></button>
           </div>
-        </section>
-
-        <section class="key-panel" aria-label="Configuração da chave da NASA">
-          <div class="key-copy">
-            <label for="nasa-key">Sua chave da NASA</label>
-            <p>A chave fica salva somente neste navegador.</p>
-          </div>
-          <div class="key-controls">
-            <input id="nasa-key" type="password" autocomplete="off" placeholder="Cole sua chave API" aria-label="Chave API da NASA">
-            <button id="save-key-button" type="button">Salvar e carregar</button>
-          </div>
-          <p id="key-status" class="key-status" role="status" aria-live="polite"></p>
         </section>
 
         <p id="status-message" class="status-message" role="status" aria-live="polite">Buscando a imagem de hoje...</p>

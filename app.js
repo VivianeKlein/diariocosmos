@@ -1,12 +1,7 @@
-const API_URL = "https://api.nasa.gov/planetary/apod";
-const DEFAULT_API_KEY = "DEMO_KEY";
-const API_KEY_STORAGE = "cosmos-nasa-api-key";
+const API_URL = "/api/apod";
 
 const datePicker = document.querySelector("#date-picker");
 const loadButton = document.querySelector("#load-button");
-const nasaKeyInput = document.querySelector("#nasa-key");
-const saveKeyButton = document.querySelector("#save-key-button");
-const keyStatus = document.querySelector("#key-status");
 const statusMessage = document.querySelector("#status-message");
 const apodContent = document.querySelector("#apod-content");
 const mediaContainer = document.querySelector("#media-container");
@@ -15,18 +10,6 @@ const imageTitle = document.querySelector("#image-title");
 const imageExplanation = document.querySelector("#image-explanation");
 const imageCredit = document.querySelector("#image-credit");
 
-let apiKey = DEFAULT_API_KEY;
-try {
-  apiKey = localStorage.getItem(API_KEY_STORAGE) || DEFAULT_API_KEY;
-  if (apiKey !== DEFAULT_API_KEY) {
-    nasaKeyInput.value = apiKey;
-    keyStatus.textContent = "Sua chave pessoal está carregada.";
-  }
-} catch {
-  keyStatus.textContent = "Não foi possível acessar o armazenamento local. A chave poderá ser usada apenas nesta visita.";
-  keyStatus.classList.add("error");
-}
-
 const today = new Date().toISOString().slice(0, 10);
 datePicker.max = today;
 datePicker.value = today;
@@ -34,6 +17,12 @@ datePicker.value = today;
 function setStatus(message, isError = false) {
   statusMessage.textContent = message;
   statusMessage.classList.toggle("error", isError);
+}
+
+try {
+  localStorage.removeItem("cosmos-nasa-api-key");
+} catch {
+  console.warn("Could not clear a NASA key saved by an earlier version.");
 }
 
 function formatDate(date) {
@@ -80,7 +69,6 @@ async function loadPicture(date) {
 
   loadButton.disabled = true;
   datePicker.disabled = true;
-  saveKeyButton.disabled = true;
   apodContent.setAttribute("aria-busy", "true");
   setStatus("Buscando a imagem...");
   imageDate.textContent = "";
@@ -90,14 +78,14 @@ async function loadPicture(date) {
   mediaContainer.innerHTML = '<div class="media-placeholder"><span class="loader" aria-hidden="true"></span><span>Conectando com o universo...</span></div>';
 
   try {
-    const query = new URLSearchParams({ api_key: apiKey, date });
+    const query = new URLSearchParams({ date });
     const response = await fetch(`${API_URL}?${query}`);
     const data = await response.json().catch(() => null);
 
     if (!response.ok) {
       const message = response.status === 429
         ? "O limite de consultas da NASA foi atingido. Tente novamente mais tarde."
-        : data?.msg || data?.message || data?.error?.message || "Não foi possível carregar a imagem agora.";
+        : data?.error || data?.message || "Não foi possível carregar a imagem agora.";
       throw new Error(message);
     }
 
@@ -123,31 +111,9 @@ async function loadPicture(date) {
   } finally {
     loadButton.disabled = false;
     datePicker.disabled = false;
-    saveKeyButton.disabled = false;
     apodContent.setAttribute("aria-busy", "false");
   }
 }
-
-saveKeyButton.addEventListener("click", () => {
-  const enteredKey = nasaKeyInput.value.trim();
-  if (!enteredKey) {
-    keyStatus.textContent = "Cole sua chave da NASA antes de salvar.";
-    keyStatus.classList.add("error");
-    nasaKeyInput.focus();
-    return;
-  }
-
-  apiKey = enteredKey;
-  try {
-    localStorage.setItem(API_KEY_STORAGE, apiKey);
-    keyStatus.textContent = "Chave salva neste navegador. Carregando a imagem...";
-    keyStatus.classList.remove("error");
-  } catch {
-    keyStatus.textContent = "Não foi possível salvar a chave. Ela será usada apenas nesta visita.";
-    keyStatus.classList.add("error");
-  }
-  loadPicture(datePicker.value);
-});
 
 loadButton.addEventListener("click", () => loadPicture(datePicker.value));
 datePicker.addEventListener("keydown", (event) => {
