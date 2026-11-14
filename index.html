@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#090d18">
+    <meta name="description" content="Explore a imagem astronômica do dia da NASA.">
+    <title>Cosmos — Imagem astronômica do dia</title>
+    <link rel="preconnect" href="https://api.nasa.gov">
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <a class="brand" href="#" aria-label="Cosmos, início">
+          <span class="brand-mark" aria-hidden="true">✳</span>
+          <span>COSMOS<span class="brand-period">.</span></span>
+        </a>
+        <span class="header-note">Uma janela para o universo</span>
+      </header>
+
+      <main>
+        <section class="intro" aria-labelledby="page-title">
+          <p class="eyebrow"><span class="live-dot" aria-hidden="true"></span> NASA · ASTRONOMY PICTURE OF THE DAY</p>
+          <h1 id="page-title">O universo, <span>em foco.</span></h1>
+          <p class="intro-copy">Uma nova perspectiva do cosmos, todos os dias.</p>
+        </section>
+
+        <section class="date-panel" aria-label="Escolha uma data">
+          <label for="date-picker">Explorar o arquivo</label>
+          <div class="date-controls">
+            <input id="date-picker" type="date" aria-label="Data da imagem astronômica">
+            <button id="load-button" type="button">Ver imagem <span aria-hidden="true">↗</span></button>
+          </div>
+        </section>
+
+        <section class="key-panel" aria-label="Configuração da chave da NASA">
+          <div class="key-copy">
+            <label for="nasa-key">Sua chave da NASA</label>
+            <p>A chave fica salva somente neste navegador.</p>
+          </div>
+          <div class="key-controls">
+            <input id="nasa-key" type="password" autocomplete="off" placeholder="Cole sua chave API" aria-label="Chave API da NASA">
+            <button id="save-key-button" type="button">Salvar e carregar</button>
+          </div>
+          <p id="key-status" class="key-status" role="status" aria-live="polite"></p>
+        </section>
+
+        <p id="status-message" class="status-message" role="status" aria-live="polite">Buscando a imagem de hoje...</p>
+
+        <article id="apod-content" class="apod-card" aria-busy="true">
+          <div id="media-container" class="media-container">
+            <div class="media-placeholder" aria-hidden="true">
+              <span class="loader"></span>
+              <span>Conectando com o universo...</span>
+            </div>
+          </div>
+          <div class="apod-details">
+            <div class="title-row">
+              <div>
+                <p id="image-date" class="image-date"></p>
+                <h2 id="image-title">Preparando sua viagem</h2>
+              </div>
+              <span class="nasa-badge" aria-label="Conteúdo da NASA">NASA</span>
+            </div>
+            <p id="image-explanation" class="explanation"></p>
+            <p id="image-credit" class="image-credit"></p>
+          </div>
+        </article>
+      </main>
+
+      <footer class="site-footer">
+        <span>Feito para quem olha para cima.</span>
+        <span>Imagens e conteúdo: <a href="https://apod.nasa.gov/apod/astropix.html" target="_blank" rel="noreferrer">NASA APOD</a></span>
+      </footer>
+    </div>
+  </body>
+</html>
